@@ -1,15 +1,15 @@
 import socket 
 from socket import *
 import os
-import platform    # For getting the operating system name
-import subprocess  # For executing a shell command
+import platform   
+import subprocess  
 import multiprocessing
 import subprocess
 from multiprocessing import Pool
 
 
 TIMEOUT = 5 
-CONCURRENCY = 100  #pings in parallel
+CONCURRENCY = 100  
 
 def format_ips(hostnames, ip_list):
 
@@ -33,6 +33,25 @@ def ping(ip):
     if ret == 0:
         return ip
 
+def pool(ip):
+    
+    p = Pool()
+    result = p.map(ping, ip)
+    p.close()
+    p.join()
+
+    return result
+
+def refine(ip_list):
+    
+    refined_list = []
+
+    for val in ip_list:
+        if val != None:
+            refined_list.append(val)
+
+    return refined_list
+
 def main():
 
     ips1 = ("192.168.0." + '%d' % i for i in range(1, 255))
@@ -42,28 +61,17 @@ def main():
     online_ip_list1 = []
     online_ip_list2 = []
     
-    p = Pool()
-    result1 = p.map(ping, ips1)
-    p.close()
-    p.join()
-
-    X = Pool()
-    result2 = X.map(ping, ips2)
-    X.close()
-    X.join()
-
-    for val in result1:
-        if val != None:
-            online_ip_list1.append(val)
+    result1 = pool(ips1)
+    result2 = pool(ips2)
     
-    for val2 in result2:
-        if val2 != None:
-                online_ip_list2.append(val2)
+    online_ip_list1 = refine(result1)
+    online_ip_list2 = refine(result2)
 
     hostname_list1 = get_hostname(online_ip_list1)
     hostname_list2 = get_hostname(online_ip_list2)
+
     format_ips(hostname_list1, online_ip_list1)
-    print("--------------------------------------")
+    print("-------------------------------------------------")
     format_ips(hostname_list2, online_ip_list2)
 
 
