@@ -41,8 +41,6 @@ def main():
     ip_list_main = []
     online_ip_list1 = []
     online_ip_list2 = []
-
-    print("before multithread")
     
     p = Pool()
     result1 = p.map(ping, ips1)
@@ -52,18 +50,14 @@ def main():
     X = Pool()
     result2 = X.map(ping, ips2)
     X.close()
-    X.joint()
-    
-    print("after map")
-    print(result1)
-    print("---------------")
-    print(result2)
+    X.join()
+
     for val in result1:
         if val != None:
             online_ip_list1.append(val)
     
     for val2 in result2:
-        if val != None:
+        if val2 != None:
                 online_ip_list2.append(val2)
 
     hostname_list1 = get_hostname(online_ip_list1)
