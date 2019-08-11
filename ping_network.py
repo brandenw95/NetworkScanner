@@ -39,20 +39,38 @@ def main():
     ips2 = ("192.168.1." + '%d' % i for i in range(1, 255))
 
     ip_list_main = []
-    online_ip_list = []
+    online_ip_list1 = []
+    online_ip_list2 = []
 
+    print("before multithread")
+    
     p = Pool()
-    result = p.map(ping, ips1)
-
+    result1 = p.map(ping, ips1)
     p.close()
     p.join()
 
-    for val in result:
+    X = Pool()
+    result2 = X.map(ping, ips2)
+    X.close()
+    X.joint()
+    
+    print("after map")
+    print(result1)
+    print("---------------")
+    print(result2)
+    for val in result1:
         if val != None:
-            online_ip_list.append(val)
+            online_ip_list1.append(val)
+    
+    for val2 in result2:
+        if val != None:
+                online_ip_list2.append(val2)
 
-    hostname_list = get_hostname(online_ip_list)
-    format_ips(hostname_list, online_ip_list)
+    hostname_list1 = get_hostname(online_ip_list1)
+    hostname_list2 = get_hostname(online_ip_list2)
+    format_ips(hostname_list1, online_ip_list1)
+    print("--------------------------------------")
+    format_ips(hostname_list2, online_ip_list2)
 
 
 
