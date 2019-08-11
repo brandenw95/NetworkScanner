@@ -31,20 +31,18 @@ def ping(ip):
 
     ret = subprocess.call(['ping ', '-w ', str(TIMEOUT), '-n ', '1 ', ip], stdout=subprocess.DEVNULL)
     if ret == 0:
-        #print(ip + " is online")
         return ip
 
 def main():
 
-    internal_ip = input("Enter the subnet: ")
-    internal_ip = internal_ip[:10]
-    ips = (internal_ip + '%d' % i for i in range(1, 255))
+    ips1 = ("192.168.0." + '%d' % i for i in range(1, 255))
+    ips2 = ("192.168.1." + '%d' % i for i in range(1, 255))
 
     ip_list_main = []
     online_ip_list = []
 
     p = Pool()
-    result = p.map(ping, ips)
+    result = p.map(ping, ips1)
 
     p.close()
     p.join()
