@@ -13,8 +13,10 @@ CONCURRENCY = 100
 
 def format_ips(hostnames, ip_list):
 
+    
     for ip, host in zip(ip_list, hostnames):
         print(ip + " is online " + "(" + host + ")" )
+    print("-------------------------------------------------")
     
 
 def get_hostname(ip_list):
@@ -71,7 +73,6 @@ def main():
     hostname_list2 = get_hostname(online_ip_list2)
 
     format_ips(hostname_list1, online_ip_list1)
-    print("-------------------------------------------------")
     format_ips(hostname_list2, online_ip_list2)
 
 
