@@ -19,12 +19,6 @@ def format_ips(hostnames, ip_list):
         print(ip + " is online " + "(" + host + ")" )
     print("-------------------------------------------------")
     
-def grab_domain():
-
-    domain = []
-
-    wmiobj = wmiobj()
-    
 
 def get_hostname(ip_list):
 
