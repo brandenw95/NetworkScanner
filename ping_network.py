@@ -6,6 +6,7 @@ import subprocess
 import multiprocessing
 import subprocess
 from multiprocessing import Pool
+import wmi
 
 
 TIMEOUT = 5 
@@ -17,6 +18,12 @@ def format_ips(hostnames, ip_list):
     for ip, host in zip(ip_list, hostnames):
         print(ip + " is online " + "(" + host + ")" )
     print("-------------------------------------------------")
+    
+def grab_domain():
+
+    domain = []
+
+    wmiobj = wmiobj()
     
 
 def get_hostname(ip_list):
